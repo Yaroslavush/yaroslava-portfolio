@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yaraslava Fedchanka — Developer & Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --warm: #c8956c;
+    --rust: #b85c38;
+    --sage: #7a9e7e;
+    --mist: #e8e2d6;
+    --accent: #d4a853;
+    --code: #3d6b5e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(245,240,232,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,149,108,0.2);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--rust);
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--rust); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 3rem;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 14vw, 16rem);
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,149,108,0.12);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--sage);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 0.3rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--warm);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .hero-bio {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--ink);
+    opacity: 0.75;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-bio strong { color: var(--rust); font-weight: 500; opacity: 1; }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.8rem;
+    border: 1.5px solid var(--rust);
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .btn-fill {
+    background: var(--rust); color: var(--paper);
+  }
+  .btn-fill:hover { background: var(--ink); border-color: var(--ink); }
+  .btn-outline {
+    background: transparent; color: var(--rust);
+  }
+  .btn-outline:hover { background: var(--rust); color: var(--paper); }
+
+  /* hero right — decorative */
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+  }
+  .hero-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem 2.2rem;
+    width: 340px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.8;
+    border-radius: 2px;
+    box-shadow: 12px 12px 0 var(--warm);
+    position: relative;
+  }
+  .hero-card::before {
+    content: '// about.js';
+    display: block;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+  }
+  .card-key { color: var(--sage); }
+  .card-str { color: var(--warm); }
+  .card-num { color: var(--accent); }
+  .card-bool { color: #c08b9a; }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 5rem 3rem;
+    position: relative;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    display: flex; align-items: center; gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--sage), transparent);
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+  h2 em { font-style: italic; color: var(--rust); }
+
+  /* ── SKILLS ── */
+  .skills-section { background: var(--ink); color: var(--paper); }
+  .skills-section .section-label { color: var(--accent); }
+  .skills-section .section-label::after { background: linear-gradient(to right, var(--accent), transparent); }
+  .skills-section h2 em { color: var(--warm); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .skill-block {
+    background: rgba(255,255,255,0.04);
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s;
+  }
+  .skill-block:hover { background: rgba(200,149,108,0.1); }
+  .skill-block-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(245,240,232,0.75);
+  }
+  .tag.learning {
+    border-color: rgba(122,158,126,0.5);
+    color: var(--sage);
+  }
+  .journey-note {
+    margin-top: 3rem;
+    padding: 2rem;
+    border-left: 2px solid var(--warm);
+    background: rgba(200,149,108,0.07);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.7);
+    font-style: italic;
+    max-width: 660px;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  .project-card {
+    border: 1px solid rgba(26,20,16,0.12);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .project-card:hover {
+    box-shadow: 8px 8px 0 var(--warm);
+    transform: translate(-2px, -2px);
+  }
+  .project-thumb {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .project-thumb.neon {
+    background: #0d0d1a;
+  }
+  .project-thumb.yoga {
+    background: linear-gradient(135deg, #f5ede0 0%, #e8d5c4 100%);
+  }
+  .thumb-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    z-index: 1;
+  }
+  .neon .thumb-label {
+    color: #00ffcc;
+    text-shadow: 0 0 20px rgba(0,255,204,0.8), 0 0 60px rgba(0,255,204,0.3);
+  }
+  .yoga .thumb-label { color: var(--rust); }
+
+  /* neon grid bg */
+  .neon::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,204,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,204,0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    animation: gridMove 8s linear infinite;
+  }
+  @keyframes gridMove {
+    from { background-position: 0 0; }
+    to { background-position: 0 24px; }
+  }
+
+  .project-body { padding: 1.8rem 2rem; }
+  .project-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--warm);
+    margin-bottom: 0.5rem;
+  }
+  .project-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.6rem;
+  }
+  .project-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    opacity: 0.65;
+    margin-bottom: 1.2rem;
+  }
+  .feature-list {
+    list-style: none;
+    margin-bottom: 1.4rem;
+  }
+  .feature-list li {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--code);
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .feature-list li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--warm);
+  }
+  .project-tech {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.4rem;
+  }
+  .tech-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--mist);
+    border-radius: 999px;
+    color: var(--code);
+    letter-spacing: 0.05em;
+  }
+  .project-links { display: flex; gap: 0.8rem; }
+  .project-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+  .link-live { border-color: var(--rust); color: var(--rust); }
+  .link-live:hover { background: var(--rust); color: var(--paper); }
+  .link-gh { border-color: var(--ink); color: var(--ink); opacity: 0.5; }
+  .link-gh:hover { opacity: 1; background: var(--ink); color: var(--paper); }
+
+  .coming-soon {
+    grid-column: 1 / -1;
+    border: 1.5px dashed rgba(26,20,16,0.15);
+    padding: 3rem;
+    text-align: center;
+  }
+  .coming-soon p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+  }
+  .coming-soon span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--warm);
+    text-transform: uppercase;
+  }
+
+  /* ── ABOUT / STORY ── */
+  .story-section { background: var(--mist); }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .story-text p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    opacity: 0.75;
+    margin-bottom: 1.2rem;
+  }
+  .story-text p strong { color: var(--rust); font-weight: 500; opacity: 1; }
+  .path-list { list-style: none; margin-top: 1rem; }
+  .path-list li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(26,20,16,0.08);
+    font-size: 0.88rem;
+  }
+  .path-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .path-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--warm);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    text-align: center;
+    padding: 6rem 3rem;
+    border-top: 1px solid rgba(26,20,16,0.1);
+  }
+  .contact-section h2 { margin-bottom: 1rem; }
+  .contact-section .lead {
+    font-size: 1rem;
+    opacity: 0.6;
+    margin-bottom: 3rem;
+    max-width: 440px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.7;
+  }
+  .contact-links {
+    display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .contact-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.55;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .contact-link:hover { opacity: 1; color: var(--rust); }
+  .contact-link .icon { font-size: 0.9rem; }
+  .cta-big {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-style: italic;
+    color: var(--rust);
+    margin-bottom: 2rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(245,240,232,0.3);
+    text-align: center;
+    padding: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-content > *:nth-child(5) { animation-delay: 0.55s; }
+  .hero-visual {
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    section { padding: 3.5rem 1.5rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .story-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Yaraslava Fedchanka</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">CODE</div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Available for hire · Vilnius, Lithuania</div>
+    <h1>Hi, I'm <em>Yaraslava</em></h1>
+    <div class="hero-subtitle">Developer in progress · AI-First · Human always</div>
+    <p class="hero-bio">
+      I'm a developer returning to tech with fresh eyes. 
+      I have a year of <strong>Java backend experience</strong> from four years ago — 
+      and now I'm back, building with <strong>AI as my co-pilot</strong> 
+      and combining that foundation with modern tools. 
+      Before all of this: contemporary art studies, yoga teaching, working with children. 
+      Turns out all of it makes you a better developer than you'd expect.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-fill">See my work</a>
+      <a href="#contact" class="btn btn-outline">Let's talk</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <span>const yaraslava = {</span><br>
+      &nbsp;&nbsp;<span class="card-key">location:</span> <span class="card-str">"Vilnius, LT"</span>,<br>
+      &nbsp;&nbsp;<span class="card-key">background:</span> <span class="card-str">"Java dev + art + yoga"</span>,<br>
+      &nbsp;&nbsp;<span class="card-key">currently:</span> <span class="card-str">"AI-First Dev"</span>,<br>
+      &nbsp;&nbsp;<span class="card-key">learning:</span> [<span class="card-str">"Python"</span>],<br>
+      &nbsp;&nbsp;<span class="card-key">pythonMonths:</span> <span class="card-num">2</span>,<br>
+      &nbsp;&nbsp;<span class="card-key">openToWork:</span> <span class="card-bool">true</span>,<br>
+      &nbsp;&nbsp;<span class="card-key">projectsLaunched:</span> <span class="card-num">2</span><br>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-label">What I work with</div>
+  <h2>Skills & <em>Stack</em></h2>
+
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="skill-block-title">Comfortable with</div>
+      <div class="skill-tags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">Java (backend)</span>
+        <span class="tag">Claude AI</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">Vercel</span>
+        <span class="tag">AI-First Dev</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-title">Currently learning</div>
+      <div class="skill-tags">
+        <span class="tag learning">Python · 2 months</span>
+        <span class="tag learning">Test Automation</span>
+        <span class="tag learning">Web Dev with AI</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-title">Soft skills that transfer</div>
+      <div class="skill-tags">
+        <span class="tag">Clear communication</span>
+        <span class="tag">Teaching mindset</span>
+        <span class="tag">Fast learner</span>
+        <span class="tag">Detail oriented</span>
+        <span class="tag">Creative thinking</span>
+      </div>
+    </div>
+  </div>
+
+  <blockquote class="journey-note">
+    I had a year of Java backend experience 4 years ago — then life took other directions. 
+    Now I'm back, and I'm not starting from zero. I'm starting from somewhere 
+    more interesting: I know what it means to ship code, and I know what it means 
+    to teach, create, and connect with people. I'm combining all of that.
+  </blockquote>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Things I've built</div>
+  <h2>Projects & <em>Work</em></h2>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <div class="project-card">
+      <div class="project-thumb neon">
+        <div class="thumb-label">Hello World</div>
+      </div>
+      <div class="project-body">
+        <div class="project-number">Project 01</div>
+        <h3>Personal Introduction Site</h3>
+        <p class="project-desc">
+          My first web project — built with AI-First methodology. 
+          Neon aesthetic, animated grid, and zero prior coding experience. 
+          I wrote it by having a conversation with Claude AI.
+        </p>
+        <ul class="feature-list">
+          <li>Neon glow aesthetic with animated grid background</li>
+          <li>Semantic HTML structure + custom CSS animations</li>
+          <li>Fully responsive (desktop & mobile)</li>
+          <li>Deployed live via GitHub + Vercel</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-chip">HTML5</span>
+          <span class="tech-chip">CSS3</span>
+          <span class="tech-chip">Claude AI</span>
+          <span class="tech-chip">GitHub</span>
+          <span class="tech-chip">Vercel</span>
+        </div>
+        <div class="project-links">
+          <a href="https://week1-introduction-vpn9.vercel.app/" target="_blank" class="project-link link-live">Live Demo ↗</a>
+          <a href="https://github.com/Yaroslavush/week1-introduction" target="_blank" class="project-link link-gh">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <div class="project-thumb yoga">
+        <div class="thumb-label">🪷 Yoga with Yaraslava</div>
+      </div>
+      <div class="project-body">
+        <div class="project-number">Project 02</div>
+        <h3>Yoga Instructor Landing Page</h3>
+        <p class="project-desc">
+          A real client project — for myself. A professional landing page 
+          for my online yoga classes, built with pure HTML/CSS and a warm, 
+          natural palette. This one felt personal.
+        </p>
+        <ul class="feature-list">
+          <li>Fully responsive design for all devices</li>
+          <li>Custom color system — ochre, rose, cream</li>
+          <li>SVG custom lotus illustration + smooth scroll</li>
+          <li>CSS transitions and hover animations</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-chip">HTML5</span>
+          <span class="tech-chip">CSS3</span>
+          <span class="tech-chip">SVG</span>
+          <span class="tech-chip">Claude AI</span>
+          <span class="tech-chip">Vercel</span>
+        </div>
+        <div class="project-links">
+          <a href="https://yoga-landing-page-delta.vercel.app/" target="_blank" class="project-link link-live">Live Demo ↗</a>
+          <a href="https://github.com/Yaroslavush/Yoga_landing_page" target="_blank" class="project-link link-gh">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coming soon -->
+    <div class="coming-soon">
+      <p>More projects on the way...</p>
+      <span>Week 5 of 16 · AI-First Development Program</span>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section" id="about">
+  <div class="section-label">The human behind the code</div>
+  <h2>My <em>Story</em></h2>
+
+  <div class="story-grid">
+    <div class="story-text">
+      <p>
+        I'm not new to code — I have a year of <strong>Java backend development</strong> 
+        in my history. But I stepped away, and life went in other directions: 
+        teaching yoga, working with children, studying 
+        <strong>Contemporary Art and Conceptual Design</strong> at EHU in Vilnius.
+      </p>
+      <p>
+        Then I discovered AI-First development and came back to tech on my own terms. 
+        Now I build things with Claude AI as my thinking partner, 
+        I've been learning <strong>Python for 2 months</strong>, 
+        and I have 2 live projects already deployed.
+      </p>
+      <p>
+        My goal is clear: a <strong>job in IT in Lithuania</strong> 
+        where I can grow fast and bring something real — 
+        a developer who's also been a teacher, an artist, and someone 
+        who knows how to communicate with humans, not just machines.
+      </p>
+    </div>
+
+    <ul class="path-list">
+      <li>
+        <div class="path-icon">💻</div>
+        <div>
+          <div class="path-year">Earlier career</div>
+          <div>1 year Java backend development · First steps in professional coding</div>
+        </div>
+      </li>
+      <li>
+        <div class="path-icon">🎨</div>
+        <div>
+          <div class="path-year">Creative detour</div>
+          <div>Contemporary Art MA · EHU Vilnius · Yoga instructor · Teacher</div>
+        </div>
+      </li>
+      <li>
+        <div class="path-icon">💡</div>
+        <div>
+          <div class="path-year">The return</div>
+          <div>AI-First development · Python for 2 months · Back to building things</div>
+        </div>
+      </li>
+      <li>
+        <div class="path-icon">🎯</div>
+        <div>
+          <div class="path-year">Next · 2026</div>
+          <div>First IT job in Vilnius · Developer with a human background</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Say hi</div>
+  <div class="cta-big">"Let's work together"</div>
+  <p class="lead">
+    I'm looking for my first IT role in Vilnius — 
+    junior, internship, bootcamp, or entry-level. 
+    I learn fast, I care about quality, and I bring a perspective 
+    that's a little different.
+  </p>
+
+  <div class="contact-links">
+    <a href="https://mail.google.com/mail/?view=cm&to=yaraslava.fedchanka@gmail.com" target="_blank" class="contact-link"><span class="icon">✉</span> <span class="__cf_email__" data-cfemail="8bf2eaf9eaf8e7eafdeaa5edeeefe8e3eae5e0eacbece6eae2e7a5e8e4e6">[email&#160;protected]</span></a>
+    <a href="https://github.com/Yaroslavush" target="_blank" class="contact-link">
+      <span class="icon">⌥</span> github.com/Yaroslavush
+    </a>
+    <a href="https://www.linkedin.com/in/yaraslava-fedchanka-64982821b" target="_blank" class="contact-link">
+      <span class="icon">◈</span> LinkedIn
+    </a>
+  </div>
+  <a href="https://mail.google.com/mail/?view=cm&to=yaraslava.fedchanka@gmail.com" target="_blank" class="btn btn-fill">Send me an email</a>
+</section>
+
+<footer>
+  &copy; 2
